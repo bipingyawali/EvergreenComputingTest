@@ -90,6 +90,7 @@
             </div>
         </div>
     </div>
+    </div>
 @endsection
 @push('scripts')
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXE_p894aZ9NpyRSjuyGgq5_NnZeSLYuw&sensor=false&libraries=places&callback=initMap"

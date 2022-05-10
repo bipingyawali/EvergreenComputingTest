@@ -32,7 +32,7 @@ class CustomerController extends Controller
      */
     public function fetchDataAjax(){
         if(\request()->ajax()){
-            $users = $this->customerModel->where('added_by', auth()->user()->id)->select('id','company_name','first_name','last_name','phone_number');
+            $users = $this->customerModel->select('id','company_name','first_name','last_name','phone_number');
             $datatable = DataTables::of($users)
                 ->addColumn('action', function ($data) {
                     return '<div class="action-btn">
@@ -67,7 +67,8 @@ class CustomerController extends Controller
     {
         DB::beginTransaction();
         try {
-            $this->customerModel->create($request->all());
+            $data = $request->validated();
+            $this->customerModel->create($data);
             DB::commit();
             $message = 'Customer added successfully.';
             Flash::success($message);

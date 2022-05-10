@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,8 +36,12 @@ class Customer extends Model
      */
     protected static function booted()
     {
-         static::creating(function ($customer) {
-             $customer->added_by = (auth()->check()) ?  auth()->user()->id : null;
+         self::creating(function ($model) {
+             $model->added_by = (auth()->check()) ?  auth()->user()->id : null;
+         });
+
+         self::addGlobalScope(function (Builder $builder){
+            $builder->where('added_by',auth()->id());
          });
     }
 }
